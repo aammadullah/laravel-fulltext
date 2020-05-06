@@ -9,11 +9,13 @@ class Search implements SearchInterface
      *
      * @return \Illuminate\Database\Eloquent\Collection|\Swis\Laravel\Fulltext\IndexedRecord[]
      */
-    public function run($search)
+    public function run($search,$paginate=false,$per_page=10)
     {
         $query = $this->searchQuery($search);
-
-        return $query->get();
+        if($paginate)
+            return $query->paginate($per_page);
+        else
+            return $query->get();
     }
 
     /**
